@@ -6,7 +6,7 @@ import java.util.ArrayList; // Importamos la clase ArrayList para poder utilizat
  * Clase Padre para representar las series tanto de fibonacci como primos
  * @author Daniel Alejandro Álvarez Casablanca
  */
-public class Serie {
+public abstract class Serie {
     // Declaramos un ArrayList de enteros para almacenar la secuencia generada
     protected ArrayList<Integer> secuenciaGenerada = new ArrayList<Integer>();
 
@@ -39,6 +39,7 @@ public class Serie {
     public Serie(int inferior, int superior) {
         this.limiteInferior = inferior;
         this.limiteSuperior = superior;
+        this.secuenciaGenerada = new ArrayList<Integer>();
     }
 
     /**
@@ -76,5 +77,26 @@ public class Serie {
      * @param valor : indice
      */
     public int get(int valor) { return this.secuenciaGenerada.get(valor); }
+    
+    public abstract void generarSerie();
 
+    /**
+     * Mostrar la serie generada por la pantalla
+     */
+    public void print() {
+        for (int i : this.secuenciaGenerada) {
+            System.out.print(i + " ");
+        }
+    }
+
+    /**
+     * Metodo para mostrar la serie generada por pantalla entre dos intervalos determinados
+     * @param limiteInferior
+     * @param limiteSuperior
+     */
+    public void print(int limiteInferior, int limiteSuperior) {
+        for (int i : this.secuenciaGenerada) {
+            if (i >= limiteInferior && i <= limiteSuperior) { System.out.print(i + " "); }
+        }
+    }
 }
