@@ -39,6 +39,7 @@ public class Primo extends Serie {
     public Primo(int inferior, int superior) {
         super(inferior, superior);
     }
+
     /**
      * Genera todos los números primos en el intervalo
      * [limiteInferior..limiteSuperior] utilizando la
@@ -46,27 +47,49 @@ public class Primo extends Serie {
      */
     @Override
     public void generarSerie() {
-        // Creamos un array de booleanos de tamaño limiteSuperior
+       boolean[] esPrimo = inicializarCriba();
+       aplicarCriba(esPrimo);
+       agregarPrimos(esPrimo);
+    }
+
+    /**
+     * Geenera un arreglo de booleanos (inicializa la Criba)
+     * @return Un arreglo de booleanos con todos los elementos en true
+     */
+    private boolean[] inicializarCriba() {
         boolean[] esPrimo = new boolean[limiteSuperior + 1];
-        // Inicializamos todos los elementos a true
-        for (int i = 2; i <= limiteSuperior; i++) {
-            esPrimo[i] = true;
-        }
-        // Marcamos los números que no son primos
-        for (int i = 2; i * i <= limiteSuperior; i++) {
-            if (esPrimo[i]) {
-                for (int j = i * i; j <= limiteSuperior; j += i) {
-                    esPrimo[j] = false;
-                }
-            }
-        }
-        // Añadimos los números primos al arraylist
-        for (int i = limiteInferior; i <= limiteSuperior; i++) {
-            if (esPrimo[i]) {
-                secuenciaGenerada.add(i);
+        Arrays.fill(esPrimo, true);
+        return esPrimo;
+    }
+
+    /**
+     * Aplica la Criba de Eratóstenes para generar los números primos
+     * @param esPrimo
+     */
+    private void aplicarCriba(boolean[] esPrimo) {
+        for (int p = 2; p * p <= limiteSuperior; p++) {
+            if (esPrimo[p]) {
+                for (int i = p * p; i <= limiteSuperior; i += p) { esPrimo[i] = false; }
             }
         }
     }
+
+    /**
+     * Agrega los números primos generados a la secuencia
+     * @param esPrimo
+     */
+    private void agregarPrimos(boolean[] esPrimo) {
+        for (int i = Math.max(2, limiteInferior); i <= limiteSuperior; i++) {
+            if (esPrimo[i]) { secuenciaGenerada.add(i); }
+        }
+    }
+
+    /**
+     * Método que comprueba si un número es primo o no
+     * @param numero: Número que se quiere comprobar si es primo
+     */
+    public static boolean
+
     /**
      * Suma todos los números primos generados en la serie
      *
