@@ -1,18 +1,16 @@
 package ejercicio1.series;
 
+/**
+ * Clase para generar la serie de Fibonacci.
+ * Interpreta limiteSuperior como "n" (n primeros Fibonacci).
+ */
 public class Fibonacci extends Serie {
-    /**
-     * Constructor por defecto
-     */
-    public Fibonacci() {
-        super();
-    }
 
     /**
      * Constructor que establece un limite superior
      */
-    public Fibonacci() {
-        super(1, superior);
+    public Fibonacci(int superior) {
+        super(superior);
     }
 
     /**
@@ -23,22 +21,39 @@ public class Fibonacci extends Serie {
     }
 
     /**
-     * Genera la serie de Fibonacci en el intervalo
-     * [limiteInferior..limiteSuperior] y los almacena en secuenciaGenerada.
-     *
+     * Calcula si un número dado pertenece a la secuencia de Fibonacci.
+     * @param numero  El número que se quiere comprobar si pertenece a la secuencia de Fibonacci.
+     * @return true si el número pertenece a la secuencia de Fibonacci, false en caso contrario.
+     */
+    private static boolean calcularFibonacci(int numero) {
+        int a = 0, b = 1;
+        while (b < numero) b = a + (a = b);
+        return b == numero;
+    }
+
+    /**
+     * Método que comprueba si un número pertenece a la secuencia de Fibonacci o no
+     * @param numero: Número que se quiere comprobar si pertenece a la secuencia
+     */
+    public static boolean esFibonacci(int numero) {
+        if (numero <= 1) { return true;	}
+        return calcularFibonacci(numero);
+    }
+
+    /**
+     * Método que genera la secuencia de Fibonacci
      */
     @Override
     public void generarSerie() {
-        int a = 0, b = 1, c = 0;
-        while (c <= limiteSuperior) {
-            c = a + b;
-            if (c >= limiteInferior && c <= limiteSuperior) {
-                secuenciaGenerada.add(c);
+        secuenciaGenerada.clear();
+        int a = 1, b = 1;
+        while (a <= limiteSuperior) {
+            if (a >= limiteInferior) {
+                secuenciaGenerada.add(a);
             }
+            int temp = a + b;
             a = b;
-            b = c;
+            b = temp;
         }
     }
-
-    
 }

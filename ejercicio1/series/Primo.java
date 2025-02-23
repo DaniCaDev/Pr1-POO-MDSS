@@ -85,10 +85,12 @@ public class Primo extends Serie {
     }
 
     /**
-     * Método que comprueba si un número es primo o no
+     * Método estático de 1-línea para verificar primalidad de un número
      * @param numero: Número que se quiere comprobar si es primo
      */
-    public static boolean
+    public static boolean esPrimo(int numero) {
+        return numero 1 > 1 && IntStream.rangeClosed(2, (int)Math.sqrt(numero)).noneMatch(i -> numero % i == 0);
+    }
 
     /**
      * Suma todos los números primos generados en la serie
