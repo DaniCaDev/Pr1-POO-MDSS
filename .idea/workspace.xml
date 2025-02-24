@@ -4,22 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1cdf7bf-738c-4693-89a3-bc5d3f7465b9" name="Changes" comment="Práctica adelantada">
-      <change afterPath="$PROJECT_DIR$/src/Test/FibonacciTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Test/PrimoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Test/VectorTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ejercicio1/app/MainMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ejercicio1/arreglos/Matriz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ejercicio1/arreglos/Vector.java" afterDir="false" />
+    <list default="true" id="a1cdf7bf-738c-4693-89a3-bc5d3f7465b9" name="Changes" comment="Práctica casi hecha">
+      <change afterPath="$PROJECT_DIR$/src/Test/MatrizTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test_matriz.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/app/MainMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/arreglos/IWriteable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/arreglos/IWriteable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/arreglos/Matrix.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/arreglos/Printable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/arreglos/Printable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/arreglos/Vector.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/series/Fibonacci.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/series/Fibonacci.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/series/Primo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/series/Primo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ejercicio1/series/Serie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/series/Serie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ejercicio1/app/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/app/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ejercicio1/arreglos/Matriz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/arreglos/Matriz.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,11 +38,6 @@
     &quot;accountId&quot;: &quot;a3fea64e-f8dd-4858-8e27-31c7dfb540e4&quot;
   }
 }</component>
-  <component name="JavaAutoRunManager">
-    <enabled-run-configurations>
-      <run-configuration type="JUnit" name="PrimoTest" />
-    </enabled-run-configurations>
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -65,6 +50,9 @@
   "keyToString": {
     "Application.MainMenu.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.FibonacciTest.executor": "Run",
+    "JUnit.MatrizTest.executor": "Run",
+    "JUnit.MatrizTest.testWriteAndRead.executor": "Run",
     "JUnit.PrimoTest.executor": "Run",
     "JUnit.PrimoTest.testGenerarSerie.executor": "Debug",
     "JUnit.VectorTest.executor": "Run",
@@ -80,7 +68,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
@@ -92,6 +80,8 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/ejercicio1" />
+      <recent name="$PROJECT_DIR$/src/ejercicio1/app" />
     </key>
   </component>
   <component name="RunManager">
@@ -99,6 +89,8 @@
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-23" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="ejercicio1.app.MainMenu" />
+      <module name="Pr1-POO-MDSS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ejercicio1.app.*" />
@@ -109,17 +101,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
+    <configuration name="MatrizTest.testWriteAndRead" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Pr1-POO-MDSS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Test" />
+      <option name="MAIN_CLASS_NAME" value="Test.MatrizTest" />
+      <option name="METHOD_NAME" value="testWriteAndRead" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Pr1-POO-MDSS" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="Application.MainMenu" />
+      <item itemvalue="JUnit.MatrizTest.testWriteAndRead" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MatrizTest.testWriteAndRead" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -141,12 +147,27 @@
       <workItem from="1740130422125" duration="857000" />
       <workItem from="1740134144719" duration="2369000" />
       <workItem from="1740392350351" duration="5382000" />
-      <workItem from="1740398670358" duration="6126000" />
+      <workItem from="1740398670358" duration="7206000" />
+      <workItem from="1740428996840" duration="3173000" />
+      <workItem from="1740432181825" duration="827000" />
     </task>
+    <task id="LOCAL-00001" summary="Práctica casi hecha">
+      <option name="closed" value="true" />
+      <created>1740411329572</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740411329572</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Práctica casi hecha" />
+    <option name="LAST_COMMIT_MESSAGE" value="Práctica casi hecha" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Pr1_POO_MDSS$MainMenu.ic" NAME="MainMenu Coverage Results" MODIFIED="1740398800323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

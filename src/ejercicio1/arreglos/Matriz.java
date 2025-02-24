@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,11 +19,23 @@ import java.util.stream.IntStream;
 public class Matriz<T extends Number> implements Printable, IWriteable {
     protected ArrayList<Vector<T>> matriz;
 
+
     /**
      * Crea una matriz 1x1 con el valor 0.0.
      */
     @SuppressWarnings("unchecked")
     public Matriz() {
+        matriz = new ArrayList<>();
+        // Inicializa la matriz con una fila y una columna con valor 0.0
+        Vector<T> fila = new Vector<>((T) Double.valueOf(0.0));
+        matriz.add(fila);
+    }
+
+    /**
+     * Crea una matriz 1x1 con el valor 0.0.
+     */
+    @SuppressWarnings("unchecked")
+    public Matriz(double[][] datos) {
         matriz = new ArrayList<>();
         matriz.add(new Vector<T>((T) Double.valueOf(0.0)));
     }
@@ -89,13 +102,16 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
     public void setFila(int i, Vector<T> fila) { while(matriz.size() <= i) matriz.add(new Vector<>()); matriz.set(i, fila); }
 
     /**
-     * Retorna la representación formateada de la matriz, con cada fila en una línea.
+     * Retorna una representación formateada de la matriz (cada fila en una línea).
      *
-     * @return Cadena con la matriz en formato de filas.
+     * @return Cadena con la matriz formateada.
      */
     @Override
     public String toFormattedString() {
-        return matriz.stream().map(Vector::toFormattedString).collect(Collectors.joining("\n"));
+        StringBuilder sb = new StringBuilder();
+        for (Vector<T> fila : matriz)
+            sb.append(fila.toFormattedString()).append("\n");
+        return sb.toString();
     }
 
     /**
@@ -130,18 +146,43 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
     /**
      * Transpone la matriz (intercambia filas por columnas).
      *
-     * @return Matriz transpuesta.
+     * @return La matriz transpuesta.
      */
     public Matriz<T> transponer() {
-        Matriz<T> trans = new Matriz<>(getNumCol(), getNumRow());
-        for (int i = 0; i < getNumCol(); i++) {
+        int numRows = getNumRow();
+        int numCols = getNumCol();
+        Matriz<T> trans = new Matriz<>(numCols, numRows); // Crea una matriz con numCols filas y numRows columnas
+        for (int i = 0; i < numCols; i++) {
             Vector<T> fila = new Vector<>();
-            for (int j = 0; j < getNumRow(); j++)
+            for (int j = 0; j < numRows; j++) {
                 fila.getVector().add(getFila(j).getElemento(i));
-            trans.matriz.add(fila);
+            }
+            trans.setFila(i, fila); // Reemplaza la fila existente en lugar de agregar una nueva
         }
         return trans;
     }
+
+    /**
+     * Método auxiliar para leer una fila de la matriz desde una línea de texto.
+     * Se espera que la línea contenga números separados por comas (ej.: "1.0,2.0").
+     *
+     * @param linea Línea de texto con los elementos de la fila.
+     * @param fila  Índice de la fila a asignar.
+     * @throws IOException Si ocurre un error al parsear la línea.
+     */
+    @SuppressWarnings("unchecked")
+    public void escribirMatriz(String linea, int fila) throws IOException {
+        String[] tokens = linea.split(",");
+        Double[] temp = new Double[tokens.length];
+        for (int i = 0; i < tokens.length; i++) {
+            String clean = tokens[i].replaceAll("[\\[\\]]", "").trim();
+            temp[i] = Double.valueOf(clean);
+        }
+        T[] arr = (T[]) temp;
+        Vector<T> vector = new Vector<>(arr);
+        setFila(fila, vector);
+    }
+
 
     /**
      * Escribe la matriz en un fichero de texto con el siguiente formato:
@@ -163,39 +204,39 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
      * @param filename Nombre del fichero de entrada.
      * @throws IOException Si ocurre un error de E/S.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void read(String filename) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filename));
-        int rows = Integer.parseInt(lines.get(0).trim()), cols = Integer.parseInt(lines.get(1).trim());
-        matriz = IntStream.range(0, rows)
-                .mapToObj(i -> new Vector<T>(
-                        Arrays.toString(Arrays.stream(lines.get(i+2).split(","))
-                                .map(String::trim)
-                                .map(s -> (T) Double.valueOf(Double.parseDouble(s)))
-                                .toArray(Number[]::new))))
-                .collect(Collectors.toCollection(ArrayList::new));
+        int rows = Integer.parseInt(lines.get(0).trim());
+        int cols = Integer.parseInt(lines.get(1).trim());
+        matriz = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            escribirMatriz(lines.get(i + 2), i);
+        }
     }
 
     /**
-     * Lee la matriz desde un Scanner.
+     * Lee la matriz desde un Scanner. Se espera que el Scanner contenga:
+     * - Primera línea: número de filas.
+     * - Segunda línea: número de columnas.
+     * - Líneas siguientes: cada fila con elementos separados por comas.
      *
      * @param sc Scanner desde el cual se leerá la matriz.
-     * @throws IOException Si ocurre un error durante la lectura.
+     * @throws IOException Si no hay suficientes líneas en el Scanner o error al parsear.
      */
     @Override
-    @SuppressWarnings("unchecked")
-    public void read(java.util.Scanner sc) throws IOException {
-        int rows = sc.nextInt(), cols = sc.nextInt();
+    public void read(Scanner sc) throws IOException {
+        int rows = sc.nextInt();
+        int cols = sc.nextInt();
         sc.nextLine();
         matriz = new ArrayList<>();
-        while(sc.hasNextLine()) {
-            String line = sc.nextLine();
-            Vector<T> row = new Vector<T>(Arrays.toString(Arrays.stream(line.split(","))
-                    .map(String::trim)
-                    .map(s -> (T) Double.valueOf(Double.parseDouble(s)))
-                    .toArray(Number[]::new)));
-            matriz.add(row);
+        for (int i = 0; i < rows; i++) {
+            if (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                escribirMatriz(line, i);
+            } else {
+                throw new IOException("No hay suficientes líneas en el Scanner.");
+            }
         }
     }
 }

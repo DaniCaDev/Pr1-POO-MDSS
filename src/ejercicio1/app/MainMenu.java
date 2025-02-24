@@ -149,13 +149,13 @@ public class MainMenu {
         while (subOpcion != 0) {
             System.out.println("----- OPERACIONES CON MATRICES -----");
             System.out.println("1. Crear y mostrar matriz (teclado)");
-            System.out.println("2. Producto de Matrices ");
+            System.out.println("2. Producto de Matrices");
             System.out.println("3. Guardar matriz en fichero");
             System.out.println("4. Cargar matriz desde fichero");
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             subOpcion = sc.nextInt();
-            sc.nextLine();
+            sc.nextLine(); // Consumir salto de línea
             switch (subOpcion) {
                 case 1:
                     System.out.print("Ingrese el número de filas: ");
@@ -171,7 +171,8 @@ public class MainMenu {
                             datos[i][j] = Double.parseDouble(elementos[j]);
                         }
                     }
-                    Matriz matriz = new Matriz(datos);
+                    // Usamos el constructor que recibe filas, columnas y datos
+                    Matriz<Double> matriz = new Matriz<>(filas, columnas, datos);
                     System.out.println("Matriz creada:");
                     matriz.print();
                     break;
@@ -189,7 +190,7 @@ public class MainMenu {
                             datos1[i][j] = Double.parseDouble(elementos1[j]);
                         }
                     }
-                    Matriz matriz1 = new Matriz(datos1);
+                    Matriz<Double> matriz1 = new Matriz<>(filas1, columnas1, datos1);
 
                     System.out.print("Ingrese el número de filas de la segunda matriz: ");
                     int filas2 = sc.nextInt();
@@ -204,9 +205,8 @@ public class MainMenu {
                             datos2[i][j] = Double.parseDouble(elementos2[j]);
                         }
                     }
-                    Matriz matriz2 = new Matriz(datos2);
-
-                    Matriz producto = matriz1.producto(matriz2);
+                    Matriz<Double> matriz2 = new Matriz<>(filas2, columnas2, datos2);
+                    Matriz<Double> producto = matriz1.producto(matriz2);
                     System.out.println("Producto de matrices:");
                     producto.print();
                     break;
@@ -254,5 +254,6 @@ public class MainMenu {
             }
             System.out.println();
         }
+        sc.close();
     }
 }
