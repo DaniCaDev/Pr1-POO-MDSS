@@ -1,6 +1,8 @@
 package ejercicio1.series;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * La clase primo hereda de la clase Serie y se encarga
@@ -85,11 +87,19 @@ public class Primo extends Serie {
     }
 
     /**
+     * Devuelve la secuencia generada de números primos
+     * @return Lista de números primos generados
+     */
+    public List<Integer> getSecuenciaGenerada() {
+        return secuenciaGenerada;
+    }
+
+    /**
      * Método estático de 1-línea para verificar primalidad de un número
      * @param numero: Número que se quiere comprobar si es primo
      */
     public static boolean esPrimo(int numero) {
-        return numero 1 > 1 && IntStream.rangeClosed(2, (int)Math.sqrt(numero)).noneMatch(i -> numero % i == 0);
+        return numero > 1 && IntStream.rangeClosed(2, (int)Math.sqrt(numero)).noneMatch(i -> numero % i == 0);
     }
 
     /**

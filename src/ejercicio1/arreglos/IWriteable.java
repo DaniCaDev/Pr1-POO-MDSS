@@ -1,6 +1,7 @@
 package ejercicio1.arreglos;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Interfaz que define la capacidad de escribir
@@ -22,5 +23,14 @@ public interface IWriteable {
      */
     default void read(String filename) throws IOException {
         throw new UnsupportedOperationException("Método read no implementado");
+    }
+
+    /**
+     * Método opcional para leer el fichero por la linea de comandos
+     * Por defecto, no está implementado
+     * Quien quiera usarlo puede sobreescribirlo
+     */
+    default void read(Scanner sc) throws IOException {
+        throw new UnsupportedOperationException("Método read(Scanner) no implementado");
     }
 }

@@ -1,5 +1,7 @@
 package ejercicio1.series;
 
+import java.util.List;
+
 /**
  * Clase para generar la serie de Fibonacci.
  * Interpreta limiteSuperior como "n" (n primeros Fibonacci).
@@ -41,6 +43,24 @@ public class Fibonacci extends Serie {
     }
 
     /**
+     * Metodo para suma de los números de la serie de Fibonacci
+     * @return La suma de los números de la serie de Fibonacci
+     */
+    public int sumarSerie() {
+        int suma = 0;
+        for (int numero : secuenciaGenerada) { suma += numero; }
+        return suma;
+    }
+
+    /**
+     * Devuelve la secuencia generada de números primos
+     * @return Lista de números primos generados
+     */
+    public List<Integer> getSecuenciaGenerada() {
+        return secuenciaGenerada;
+    }
+
+    /**
      * Método que genera la secuencia de Fibonacci
      */
     @Override
@@ -56,4 +76,6 @@ public class Fibonacci extends Serie {
             b = temp;
         }
     }
+
+
 }
