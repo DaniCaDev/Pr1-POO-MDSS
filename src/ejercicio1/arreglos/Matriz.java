@@ -102,6 +102,45 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
     public void setFila(int i, Vector<T> fila) { while(matriz.size() <= i) matriz.add(new Vector<>()); matriz.set(i, fila); }
 
     /**
+     * Obtiene una columna específica de la matriz como un vector.
+     *
+     * @param j Índice de la columna (empezando por 0)
+     * @return Vector con los elementos de la columna
+     * @throws IndexOutOfBoundsException Si el índice está fuera de rango
+     */
+    public Vector<T> getColumna(int j) {
+        if (j < 0 || j >= getNumCol()) {
+            throw new IndexOutOfBoundsException("Índice de columna fuera de rango");
+        }
+
+        Vector<T> columna = new Vector<>();
+        for (int i = 0; i < getNumRow(); i++) {
+            columna.getVector().add(getFila(i).getElemento(j));
+        }
+        return columna;
+    }
+
+    /**
+     * Establece una columna completa en la matriz.
+     *
+     * @param j Índice de la columna (empezando por 0)
+     * @param columna Vector con los nuevos valores para la columna
+     * @throws IndexOutOfBoundsException Si el índice está fuera de rango
+     * @throws IllegalArgumentException Si el tamaño del vector no coincide con el número de filas
+     */
+    public void setColumna(int j, Vector<T> columna) {
+        if (j < 0 || j >= getNumCol()) {
+            throw new IndexOutOfBoundsException("Índice de columna fuera de rango");
+        }
+        if (columna.getLongitud() != getNumRow()) {
+            throw new IllegalArgumentException("El tamaño de la columna no coincide con el número de filas");
+        }
+        for (int i = 0; i < getNumRow(); i++) {
+            getFila(i).getVector().set(j, columna.getElemento(i));
+        }
+    }
+
+    /**
      * Retorna una representación formateada de la matriz (cada fila en una línea).
      *
      * @return Cadena con la matriz formateada.
@@ -121,7 +160,7 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
     public void print() { System.out.println(toFormattedString()); }
 
     /**
-     * Calcula el producto de esta matriz por otra.
+     * Calcula el producto de esta matriz por otra utilizando el método productoEscalar de Vector.
      *
      * @param other Matriz multiplicadora.
      * @return Matriz resultante del producto.
@@ -129,17 +168,21 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
      */
     @SuppressWarnings("unchecked")
     public Matriz<T> producto(Matriz<T> other) {
-        if(getNumCol() != other.getNumRow()) throw new IllegalArgumentException("Dimensiones incompatibles");
+        if(getNumCol() != other.getNumRow())
+            throw new IllegalArgumentException("Dimensiones incompatibles");
+
         Matriz<T> res = new Matriz<>(getNumRow(), other.getNumCol());
-        for (int i = 0; i < getNumRow(); i++)
+        // Obtener la matriz transpuesta de 'other' para facilitar el acceso a las columnas
+        Matriz<T> otherTransposed = other.transponer();
+        for (int i = 0; i < getNumRow(); i++) {
             for (int j = 0; j < other.getNumCol(); j++) {
-                int finalI = i;
-                int finalJ = j;
-                res.getFila(i).getVector().set(j, (T) Double.valueOf(
-                        IntStream.range(0, getNumCol())
-                                .mapToDouble(k -> getFila(finalI).getElemento(k).doubleValue() * other.getFila(k).getElemento(finalJ).doubleValue())
-                                .sum()));
+                // Usar el producto escalar entre la fila i de esta matriz y la fila j de la transpuesta
+                // (que es la columna j de la matriz original)
+                double producto = getFila(i).productoEscalar(otherTransposed.getFila(j));
+                // Asignar el resultado al elemento (i,j) de la matriz resultante
+                res.getFila(i).getVector().set(j, (T) Double.valueOf(producto));
             }
+        }
         return res;
     }
 
@@ -153,11 +196,9 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
         int numCols = getNumCol();
         Matriz<T> trans = new Matriz<>(numCols, numRows); // Crea una matriz con numCols filas y numRows columnas
         for (int i = 0; i < numCols; i++) {
-            Vector<T> fila = new Vector<>();
-            for (int j = 0; j < numRows; j++) {
-                fila.getVector().add(getFila(j).getElemento(i));
-            }
-            trans.setFila(i, fila); // Reemplaza la fila existente en lugar de agregar una nueva
+            // Usamos getColumna para obtener cada columna de la matriz original
+            // y la asignamos como fila en la matriz transpuesta
+            trans.setFila(i, getColumna(i));
         }
         return trans;
     }
@@ -185,21 +226,28 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
 
 
     /**
-     * Escribe la matriz en un fichero de texto con el siguiente formato:
-     * línea 1: número de filas, línea 2: número de columnas, luego cada fila en una línea.
+     * Escribe la matriz en un fichero de texto, cada fila en una línea.
+     * Ya no se incluyen explícitamente las dimensiones, estas se infieren
+     * de los vectores guardados.
      *
      * @param filename Nombre del fichero de salida.
      * @throws IOException Si ocurre un error de E/S.
      */
     @Override
     public void write(String filename) throws IOException {
-        String content = getNumRow() + "\n" + getNumCol() + "\n" + toFormattedString();
-        Files.write(Paths.get(filename), content.getBytes());
+        // Ya no escribimos explícitamente las dimensiones
+        // El número de filas se determina por la cantidad de líneas
+        // El número de columnas se determina por la longitud de cada fila
+        StringBuilder content = new StringBuilder();
+        for (Vector<T> fila : matriz) {
+            content.append(fila.toFormattedString()).append("\n");
+        }
+        Files.write(Paths.get(filename), content.toString().getBytes());
     }
 
     /**
-     * Lee una matriz desde un fichero de texto con el siguiente formato:
-     * línea 1: número de filas, línea 2: número de columnas, luego cada fila con elementos separados por comas.
+     * Lee una matriz desde un fichero de texto.
+     * Las dimensiones se infieren del contenido del archivo.
      *
      * @param filename Nombre del fichero de entrada.
      * @throws IOException Si ocurre un error de E/S.
@@ -207,11 +255,14 @@ public class Matriz<T extends Number> implements Printable, IWriteable {
     @Override
     public void read(String filename) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filename));
-        int rows = Integer.parseInt(lines.get(0).trim());
-        int cols = Integer.parseInt(lines.get(1).trim());
         matriz = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
-            escribirMatriz(lines.get(i + 2), i);
+
+        for (int i = 0; i < lines.size(); i++) {
+            try {
+                escribirMatriz(lines.get(i), i);
+            } catch (Exception e) {
+                throw new IOException("Error al parsear la línea " + (i + 1) + ": " + e.getMessage());
+            }
         }
     }
 

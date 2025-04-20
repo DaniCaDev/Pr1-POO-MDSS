@@ -78,8 +78,17 @@ public class MatrizTest {
         String filename = "test_matriz.txt";
         matriz.write(filename);
 
+        // Leer el archivo para verificar que se ha escrito correctamente
+        // Ahora el archivo debe contener directamente las filas, sin las dimensiones
+        String fileContent = Files.readString(Paths.get(filename));
+        assertTrue(fileContent.contains("[1.0, 2.0]"));
+        assertTrue(fileContent.contains("[3.0, 4.0]"));
+
+        // Leer la matriz desde el archivo
         Matriz<Double> matrizLeida = new Matriz<>();
         matrizLeida.read(filename);
+
+        // Verificar que se han leído correctamente las dimensiones y los datos
         assertEquals(2, matrizLeida.getNumRow());
         assertEquals(2, matrizLeida.getNumCol());
         assertEquals(1.0, matrizLeida.getFila(0).getElemento(0));
@@ -92,7 +101,8 @@ public class MatrizTest {
 
     @Test
     public void testReadFromScanner() throws IOException {
-        String data = "2 2\n1.0, 2.0\n3.0, 4.0\n";
+        // La cadena ahora solo contiene los vectores, sin dimensiones
+        String data = "[1.0, 2.0]\n[3.0, 4.0]\n";
         Scanner sc = new Scanner(data);
         Matriz<Double> matriz = new Matriz<>();
         matriz.read(sc);
