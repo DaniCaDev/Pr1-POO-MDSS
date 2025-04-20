@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1cdf7bf-738c-4693-89a3-bc5d3f7465b9" name="Changes" comment="Práctica casi hecha">
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Test/MatrizTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/MatrizTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ejercicio1/arreglos/Matriz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ejercicio1/arreglos/Matriz.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +36,9 @@
 }</component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="PtmrcTEE" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8

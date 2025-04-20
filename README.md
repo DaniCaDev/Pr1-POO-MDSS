@@ -128,6 +128,15 @@ classDiagram
         +sumarSerie() int
     }
     
+    class MainMenu {
+        +main(args) void
+        -printMainMenu() void
+        -handlePrimos(sc) void
+        -handleFibonacci(sc) void
+        -handleVectores(sc) void
+        -handleMatrices(sc) void
+    }
+    
     Vector ..|> Printable : implements
     Vector ..|> IWriteable : implements
     Matriz ..|> Printable : implements
@@ -135,6 +144,10 @@ classDiagram
     Matriz "1" o-- "many" Vector : contains
     Primo --|> Serie : extends
     Fibonacci --|> Serie : extends
+    MainMenu --> Vector : uses
+    MainMenu --> Matriz : uses
+    MainMenu --> Primo : uses
+    MainMenu --> Fibonacci : uses
 ```
 
 ## 🚀 Uso
